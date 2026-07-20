@@ -26,11 +26,7 @@ if [[ "$DATABASE_PROVIDER" == "postgresql" || "$DATABASE_PROVIDER" == "mysql" ||
         # Baseline: mark every existing migration as already applied
         if [ -d "$MIGRATIONS_DIR" ]; then
             echo "Baselining existing migrations..."
-            for migration_dir in "$MIGRATIONS_DIR"/*/; do
-                migration_name=$(basename "$migration_dir")
-                echo "  Resolving: $migration_name"
-                npx prisma migrate resolve --applied "$migration_name" --schema "$SCHEMA_FILE" 2>&1
-            done
+            node ./Docker/scripts/baseline.js
             echo "Baseline complete. Retrying migrate deploy..."
             npm run db:deploy
             if [ $? -ne 0 ]; then
