@@ -1,0 +1,40 @@
+{
+  "name": "RetornAI",
+  "short_name": "RetornAI",
+  "description": "Gestão inteligente para seu negócio",
+  "start_url": "/dashboard",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FBF8F3",
+  "theme_color": "#E85D1F",
+  "lang": "pt-BR",
+  "categories": ["business", "productivity"],
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Conversas",
+      "url": "/dashboard/conversations",
+      "description": "Ver conversas e mensagens"
+    },
+    {
+      "name": "Agenda",
+      "url": "/dashboard/calendar",
+      "description": "Ver agenda do dia"
+    }
+  ]
+}

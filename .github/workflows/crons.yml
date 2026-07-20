@@ -1,0 +1,75 @@
+name: Cron Jobs
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # every hour  → automations
+    - cron: "0 6 * * *"   # 6 AM UTC    → dream
+    - cron: "0 8 * * *"   # 8 AM UTC    → contracts + whatsapp-reminders
+    - cron: "0 9 * * *"   # 9 AM UTC    → whatsapp-refresh
+  workflow_dispatch:       # allow manual trigger from GitHub UI
+
+# Set APP_URL in repo Settings → Secrets and variables → Actions → Variables,
+# and CRON_SECRET under → Secrets. Jobs no-op (non-fatal curl failure) until both are set.
+env:
+  APP_URL: ${{ vars.APP_URL }}
+
+jobs:
+  automations:
+    name: Automations (hourly)
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 * * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger automations cron
+        run: |
+          curl -sf \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            "$APP_URL/api/cron/automations" \
+          && echo "ok" || echo "failed (non-fatal)"
+
+  dream:
+    name: Dream (daily 6 AM)
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 6 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger dream cron
+        run: |
+          curl -sf \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            "$APP_URL/api/cron/dream" \
+          && echo "ok" || echo "failed (non-fatal)"
+
+  contracts:
+    name: Contracts (daily 8 AM)
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 8 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger contracts cron
+        run: |
+          curl -sf \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            "$APP_URL/api/cron/contracts" \
+          && echo "ok" || echo "failed (non-fatal)"
+
+  whatsapp-reminders:
+    name: WhatsApp Reminders (daily 8 AM)
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 8 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger whatsapp-reminders cron
+        run: |
+          curl -sf \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            "$APP_URL/api/cron/whatsapp-reminders" \
+          && echo "ok" || echo "failed (non-fatal)"
+
+  whatsapp-refresh:
+    name: WhatsApp Token Refresh (daily 9 AM)
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 9 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger whatsapp-refresh cron
+        run: |
+          curl -sf \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            "$APP_URL/api/cron/whatsapp-refresh" \
+          && echo "ok" || echo "failed (non-fatal)"

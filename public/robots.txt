@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /onboarding
+Disallow: /pending
+
+Allow: /
+Allow: /login
+Allow: /register
+
+Sitemap: https://retornai.com.br/sitemap.xml
