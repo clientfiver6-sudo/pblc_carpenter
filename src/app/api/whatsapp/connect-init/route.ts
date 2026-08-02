@@ -35,10 +35,11 @@ export async function POST() {
     console.error("[connect-init] NEXT_PUBLIC_APP_URL is not set")
     return NextResponse.json({ error: "Configuração incompleta no servidor (APP_URL)" }, { status: 500 })
   }
-  // For Docker: Evolution API container can't reach "localhost" on the host.
-  // Use EVOLUTION_WEBHOOK_URL override, or auto-swap localhost → host.docker.internal.
+  // In local dev Docker: swap localhost → host.docker.internal.
+  // In production (Vercel): use real appUrl directly so cloud servers like Render can reach it.
+  const isDev = process.env.NODE_ENV === "development"
   const webhookBase = process.env.EVOLUTION_WEBHOOK_URL
-    || appUrl.replace(/localhost/i, "host.docker.internal")
+    || (isDev && appUrl.includes("localhost") ? appUrl.replace(/localhost/i, "host.docker.internal") : appUrl)
   const webhookUrl = `${webhookBase}/api/webhooks/whatsapp`
   console.log("[connect-init] webhook URL:", webhookUrl)
 
