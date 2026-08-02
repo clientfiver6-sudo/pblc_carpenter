@@ -68,12 +68,26 @@ export default function ConversationsPage() {
 
         const { data: rawBiz } = await supabase
           .from("businesses")
-          .select("whatsapp_token, whatsapp_phone_id, whatsapp_ai_enabled")
+          .select("whatsapp_phone_id, whatsapp_connected_at, whatsapp_ai_enabled")
           .eq("id", bu.business_id)
           .single()
-        const biz = rawBiz as { whatsapp_token: string | null; whatsapp_phone_id: string | null; whatsapp_ai_enabled: boolean } | null
-        setWhatsappConnected(Boolean(biz?.whatsapp_token && biz?.whatsapp_phone_id))
+        const biz = rawBiz as { whatsapp_phone_id: string | null; whatsapp_connected_at: string | null; whatsapp_ai_enabled: boolean } | null
+        const isConnected = Boolean(biz?.whatsapp_phone_id && biz?.whatsapp_connected_at)
+        setWhatsappConnected(isConnected)
         setGlobalAiEnabled(biz?.whatsapp_ai_enabled ?? false)
+
+        if (biz?.whatsapp_phone_id && !biz?.whatsapp_connected_at) {
+          // Self-healing: if instance is configured but connection timestamp is null,
+          // check live status in the background and update the database if connected.
+          fetch("/api/whatsapp/connect-status")
+            .then((r) => r.json())
+            .then((status) => {
+              if (status?.connected) {
+                setWhatsappConnected(true)
+              }
+            })
+            .catch(() => {})
+        }
       }
       setLoadingBusiness(false)
     }

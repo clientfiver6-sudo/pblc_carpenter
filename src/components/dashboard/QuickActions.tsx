@@ -1,8 +1,5 @@
-"use client";
-
 import Link from "next/link";
 import { Calendar, Users, MessageCircle, CreditCard, ChevronRight } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { getBusinessConfig, type BusinessType } from "@/lib/config/business-types";
 
@@ -23,19 +20,19 @@ function ActionItem({ href, icon: Icon, label, iconColor, iconBg }: ActionItemPr
     <Link href={href} className="block group">
       <div
         className={cn(
-          "flex items-center gap-3 p-3 rounded-md border border-border bg-surface",
-          "hover:bg-surface-2 hover:border-border-2 hover:-translate-y-0.5 transition-[color,background-color,border-color,transform] duration-150 ease-brand-out active:scale-[0.98] cursor-pointer"
+          "flex items-center gap-3.5 p-4 rounded-xl border border-border/75 bg-white shadow-sm",
+          "hover:bg-surface-2 hover:border-brand/20 hover:-translate-y-0.5 transition-all duration-200 ease-brand-out active:scale-[0.98] cursor-pointer"
         )}
       >
         <div
           className={cn(
-            "w-9 h-9 rounded-md flex items-center justify-center shrink-0 transition-colors",
+            "w-10 h-10 rounded-lg flex items-center justify-center shrink-0 shadow-inner",
             iconBg
           )}
         >
-          <Icon className={cn("w-4 h-4", iconColor)} />
+          <Icon className={cn("w-5 h-5", iconColor)} />
         </div>
-        <span className="text-sm font-semibold text-ink leading-tight flex-1">
+        <span className="text-xs sm:text-sm font-bold text-ink leading-tight flex-1">
           {label}
         </span>
         <ChevronRight className="text-ink-4 group-hover:text-ink-3 w-4 h-4 ml-auto transition-colors" />
@@ -84,19 +81,15 @@ export function QuickActions({ businessType }: QuickActionsProps) {
   ];
 
   return (
-    <Card className="bg-surface border border-border rounded-lg shadow-1 p-5">
-      <CardHeader className="p-0 mb-3">
-        <CardTitle className="text-sm font-bold text-ink">
-          Ações Rápidas
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="p-0">
-        <div className="grid grid-cols-1 gap-2">
-          {actions.map((action) => (
-            <ActionItem key={action.href} {...action} />
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+    <div className="bg-white border border-border/75 rounded-2xl shadow-sm p-6 space-y-4">
+      <h3 className="text-xs font-extrabold text-ink-3 uppercase tracking-wider">
+        Ações Rápidas
+      </h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {actions.map((action) => (
+          <ActionItem key={action.href} {...action} />
+        ))}
+      </div>
+    </div>
   );
 }

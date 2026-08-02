@@ -1,5 +1,10 @@
 import { z } from 'zod'
 
+const emptyToUndefined = (val: unknown) => (val === "" ? undefined : val);
+const optionalUrl = () => z.preprocess(emptyToUndefined, z.string().url().optional());
+const optionalStartsWith = (prefix: string) => z.preprocess(emptyToUndefined, z.string().startsWith(prefix).optional());
+const optionalString = () => z.preprocess(emptyToUndefined, z.string().optional());
+
 const envSchema = z.object({
   // ── Required (app crashes without these) ──────────────────────────────────
   NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
@@ -14,41 +19,41 @@ const envSchema = z.object({
   CRON_SECRET: z.string().min(32),
 
   // ── Upstash Redis (optional dev, required prod) ───────────────────────────
-  UPSTASH_REDIS_REST_URL: z.string().url().optional(),
-  UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
+  UPSTASH_REDIS_REST_URL: optionalUrl(),
+  UPSTASH_REDIS_REST_TOKEN: optionalString(),
 
   // ── WhatsApp / Z-API (optional dev, required prod for messaging) ─────────
-  WHATSAPP_API_TOKEN: z.string().optional(),
-  WHATSAPP_PHONE_NUMBER_ID: z.string().optional(),
+  WHATSAPP_API_TOKEN: optionalString(),
+  WHATSAPP_PHONE_NUMBER_ID: optionalString(),
 
   // ── Mercado Pago (optional dev, required prod for payments) ──────────────
-  MERCADOPAGO_ACCESS_TOKEN: z.string().optional(),
-  MERCADOPAGO_WEBHOOK_SECRET: z.string().optional(),
-  MERCADOPAGO_SUBSCRIPTION_WEBHOOK_SECRET: z.string().optional(),
-  MERCADOPAGO_CLIENT_ID: z.string().optional(),
-  MERCADOPAGO_CLIENT_SECRET: z.string().optional(),
-  MERCADOPAGO_PLATFORM_ACCESS_TOKEN: z.string().optional(),
-  MERCADOPAGO_STARTER_PLAN_ID: z.string().optional(),
-  MERCADOPAGO_PRO_PLAN_ID: z.string().optional(),
+  MERCADOPAGO_ACCESS_TOKEN: optionalString(),
+  MERCADOPAGO_WEBHOOK_SECRET: optionalString(),
+  MERCADOPAGO_SUBSCRIPTION_WEBHOOK_SECRET: optionalString(),
+  MERCADOPAGO_CLIENT_ID: optionalString(),
+  MERCADOPAGO_CLIENT_SECRET: optionalString(),
+  MERCADOPAGO_PLATFORM_ACCESS_TOKEN: optionalString(),
+  MERCADOPAGO_STARTER_PLAN_ID: optionalString(),
+  MERCADOPAGO_PRO_PLAN_ID: optionalString(),
 
   // ── Twilio (optional dev, required prod for voice) ────────────────────────
-  TWILIO_ACCOUNT_SID: z.string().startsWith('AC').optional(),
-  TWILIO_AUTH_TOKEN: z.string().optional(),
-  TWILIO_DID_NUMBER: z.string().optional(),
+  TWILIO_ACCOUNT_SID: optionalStartsWith('AC'),
+  TWILIO_AUTH_TOKEN: optionalString(),
+  TWILIO_DID_NUMBER: optionalString(),
 
   // ── Gmail SMTP (optional dev, required prod for email) ───────────────────
-  EMAIL_USER: z.string().optional(),
-  EMAIL_PASSWORD: z.string().optional(), // Google App Password (not your login password)
+  EMAIL_USER: optionalString(),
+  EMAIL_PASSWORD: optionalString(), // Google App Password (not your login password)
 
   // ── Cloudflare Turnstile (optional dev, required prod for captcha) ────────
-  NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().optional(),
-  TURNSTILE_SECRET_KEY: z.string().optional(),
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY: optionalString(),
+  TURNSTILE_SECRET_KEY: optionalString(),
 
   // ── Deepgram (optional dev, required prod for medical audio transcription) ─
-  DEEPGRAM_API_KEY: z.string().optional(),
+  DEEPGRAM_API_KEY: optionalString(),
 
   // ── DeepSeek (optional — used for brain/analytics to cut AI costs ~10x) ───
-  DEEPSEEK_API_KEY: z.string().optional(),
+  DEEPSEEK_API_KEY: optionalString(),
 })
 
 const parsed = envSchema.safeParse(process.env)

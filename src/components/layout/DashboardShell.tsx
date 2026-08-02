@@ -1,5 +1,5 @@
 "use client"
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 import { usePathname } from "next/navigation"
@@ -85,6 +85,23 @@ interface DashboardShellProps {
 
 export function DashboardShell({ business, children, unreadConversations, onboarded = true, plan, subscriptionStatus }: DashboardShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+
+  useEffect(() => {
+    const saved = localStorage.getItem("sidebar_collapsed")
+    if (saved === "true") {
+      setSidebarCollapsed(true)
+    }
+  }, [])
+
+  const toggleSidebar = () => {
+    setSidebarCollapsed((prev) => {
+      const next = !prev
+      localStorage.setItem("sidebar_collapsed", String(next))
+      return next
+    })
+  }
+
   const pathname = usePathname()
   const terminology = useMemo(
     () => getTerminology({ type: business.type, settings: business.settings }),
@@ -113,6 +130,8 @@ export function DashboardShell({ business, children, unreadConversations, onboar
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
           plan={plan ?? "starter"}
+          isCollapsed={sidebarCollapsed}
+          onToggleCollapse={toggleSidebar}
         />
         <div className="flex-1 flex flex-col min-w-0">
           <Topbar

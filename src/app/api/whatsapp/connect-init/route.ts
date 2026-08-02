@@ -35,7 +35,12 @@ export async function POST() {
     console.error("[connect-init] NEXT_PUBLIC_APP_URL is not set")
     return NextResponse.json({ error: "Configuração incompleta no servidor (APP_URL)" }, { status: 500 })
   }
-  const webhookUrl = `${appUrl}/api/webhooks/whatsapp`
+  // For Docker: Evolution API container can't reach "localhost" on the host.
+  // Use EVOLUTION_WEBHOOK_URL override, or auto-swap localhost → host.docker.internal.
+  const webhookBase = process.env.EVOLUTION_WEBHOOK_URL
+    || appUrl.replace(/localhost/i, "host.docker.internal")
+  const webhookUrl = `${webhookBase}/api/webhooks/whatsapp`
+  console.log("[connect-init] webhook URL:", webhookUrl)
 
   const instanceName = `business-${businessId}`
 
@@ -49,7 +54,11 @@ export async function POST() {
 
     const admin = createAdminClient()
     const { error: updateErr } = await admin.from("businesses")
-      .update({ whatsapp_phone_id: instanceName, whatsapp_token: null } as never)
+      .update({
+        whatsapp_phone_id: instanceName,
+        whatsapp_token: null,
+        whatsapp_connected_at: new Date().toISOString(),
+      } as never)
       .eq("id", businessId)
     if (updateErr) {
       console.error("[connect-init] DB update failed", updateErr)

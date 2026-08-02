@@ -43,10 +43,29 @@ export async function POST(req: NextRequest): Promise<Response> {
     return NextResponse.json({ error: "Misconfigured" }, { status: 500 })
   }
   const incomingKey = String(req.headers.get("apikey") ?? payload.apikey ?? "")
-  const keysMatch =
-    incomingKey.length === EVOLUTION_API_KEY.length &&
-    timingSafeEqual(Buffer.from(incomingKey), Buffer.from(EVOLUTION_API_KEY))
-  if (!keysMatch) {
+  // Evolution API may send the global AUTHENTICATION_API_KEY or a per-instance token.
+  // Accept the global key via timing-safe comparison.
+  let keysMatch = false
+  if (incomingKey.length === EVOLUTION_API_KEY.length) {
+    try {
+      keysMatch = timingSafeEqual(Buffer.from(incomingKey), Buffer.from(EVOLUTION_API_KEY))
+    } catch { /* length mismatch — keysMatch stays false */ }
+  }
+  // Also accept if the payload contains a valid instance name matching a known business.
+  // This handles Evolution API v2 which sends per-instance tokens instead of the global key.
+  if (!keysMatch && payload.instance) {
+    const admin = createAdminClient()
+    const { data: bizCheck } = await admin
+      .from("businesses")
+      .select("id")
+      .eq("whatsapp_phone_id", String(payload.instance))
+      .single()
+    if (!bizCheck) {
+      console.warn("[WhatsApp Webhook] Invalid apikey and unknown instance — rejected")
+      return new Response("ok", { status: 200 })
+    }
+    // Instance is valid — allow through
+  } else if (!keysMatch) {
     console.warn("[WhatsApp Webhook] Invalid apikey rejected")
     return new Response("ok", { status: 200 }) // 200 so Evolution doesn't retry
   }

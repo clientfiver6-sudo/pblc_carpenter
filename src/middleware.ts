@@ -11,6 +11,10 @@ function applySecurityHeaders(response: NextResponse): NextResponse {
 }
 
 export async function middleware(request: NextRequest) {
+  if (request.headers.has("next-action")) {
+    return NextResponse.next();
+  }
+
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(

@@ -94,14 +94,17 @@ export function Topbar({ businessId, businessName, onMenuClick, unreadConversati
         <motion.button
           type="button"
           onClick={() => setSearchOpen(true)}
-          className="hidden sm:flex items-center gap-1.5 px-3 h-8 rounded-md border border-border bg-surface text-sm text-ink-4 hover:border-brand/50 hover:text-ink-3 transition-colors duration-200"
+          className="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-xl border border-border bg-surface text-xs text-ink-4 hover:border-brand/40 hover:text-ink-3 hover:shadow-sm transition-all duration-200"
           aria-label="Buscar"
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.97 }}
           transition={spring.snappy}
         >
-          <Search className="w-3.5 h-3.5 shrink-0" />
-          <span className="w-40 text-left text-sm">Buscar...</span>
+          <Search className="w-3.5 h-3.5 shrink-0 text-ink-3" />
+          <span className="w-32 text-left text-xs text-ink-3">Buscar...</span>
+          <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-0.5 rounded border border-border bg-surface-2 px-1.5 font-mono text-[9px] font-medium text-ink-4">
+            <span className="text-[10px]">⌘</span>K
+          </kbd>
         </motion.button>
         {/* Mobile: icon-only search */}
         <motion.button

@@ -127,12 +127,20 @@ export default async function DashboardPage() {
     <div className="max-w-[1380px] mx-auto px-4 sm:px-6 md:px-8 py-7 pb-28 space-y-6">
       {/* Header */}
       <FadeUp delay={0}>
-        <h2 className="text-2xl font-bold text-ink tracking-tight">
-          Olá, {firstName} 👋
-        </h2>
-        <p className="text-sm text-ink-3 mt-0.5">
-          {new Date().toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long" })}
-        </p>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border/40 pb-5">
+          <div>
+            <h2 className="text-3xl font-extrabold text-ink tracking-tight">
+              Olá, <span className="gradient-text font-extrabold">{firstName}</span> 👋
+            </h2>
+            <p className="text-xs font-semibold text-ink-3 uppercase tracking-wider mt-1.5">
+              {new Date().toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long" })}
+            </p>
+          </div>
+          <div className="flex items-center gap-2 bg-moss/5 border border-moss/20 px-3.5 py-1.5 rounded-full shrink-0">
+            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+            <span className="text-[10px] font-extrabold text-moss uppercase tracking-wider">WhatsApp IA Ativo</span>
+          </div>
+        </div>
       </FadeUp>
 
       {/* Daily summary — with ambient gradient orbs for depth */}

@@ -20,6 +20,8 @@ import {
   ClipboardList,
   Stethoscope,
   FileText,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -34,6 +36,8 @@ interface SidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
   plan?: "starter" | "pro" | "medical";
+  isCollapsed?: boolean;
+  onToggleCollapse?: () => void;
 }
 
 function getWorkItemLabel(type: BusinessType): string {
@@ -61,6 +65,8 @@ export function Sidebar({
   isOpen = false,
   onClose,
   plan = "starter",
+  isCollapsed = false,
+  onToggleCollapse,
 }: SidebarProps) {
   const pathname = usePathname();
   const config = getBusinessConfig(businessType);
@@ -119,11 +125,11 @@ export function Sidebar({
 
     if (item.comingSoon) {
       return (
-        <div key={item.href} className="relative">
+        <div key={item.href} className="relative" title={isCollapsed ? `${item.label} (Em breve)` : undefined}>
           <div className="relative z-10 flex items-center gap-2.5 px-3 py-2 rounded-md text-sm w-full cursor-default text-ink-4">
             <item.icon className="w-[17px] h-[17px] shrink-0 text-ink-4" />
-            <span className="flex-1 truncate">{item.label}</span>
-            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-tint text-brand border border-brand/20 uppercase tracking-wide shrink-0">
+            <span className={cn("flex-1 truncate md:hidden", !isCollapsed && "md:inline")}>{item.label}</span>
+            <span className={cn("text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-tint text-brand border border-brand/20 uppercase tracking-wide shrink-0 md:hidden", !isCollapsed && "md:inline-block")}>
               Em breve
             </span>
           </div>
@@ -144,6 +150,7 @@ export function Sidebar({
         <Link
           href={item.href}
           onClick={onClose}
+          title={isCollapsed ? item.label : undefined}
           className={cn(
             "relative z-10 flex items-center gap-2.5 px-3 py-2 rounded-md text-sm w-full",
             "transition-colors duration-100",
@@ -160,20 +167,23 @@ export function Sidebar({
               active ? "text-white" : isProLocked ? "text-ink-4" : "text-ink-3"
             )}
           />
-          <span className="flex-1 truncate">{item.label}</span>
+          <span className={cn("flex-1 truncate md:hidden", !isCollapsed && "md:inline")}>{item.label}</span>
           {isProLocked && (
-            <span className="flex items-center gap-1 shrink-0">
+            <span className={cn("flex items-center gap-1 shrink-0 md:hidden", !isCollapsed && "md:flex")}>
               <span className="text-[9px] font-semibold text-ink-4 uppercase tracking-wide">Pro</span>
               <Lock className="w-3 h-3 text-ink-4" />
             </span>
           )}
           {!isProLocked && item.badge !== undefined && (
-            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-brand text-white min-w-[18px] text-center leading-tight shrink-0">
+            <span className={cn(
+              "text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-brand text-white min-w-[18px] text-center leading-tight shrink-0",
+              isCollapsed ? "md:absolute md:top-1 md:right-1 md:min-w-[8px] md:h-2 md:p-0 md:text-[0px] md:bg-brand" : ""
+            )}>
               {item.badge > 99 ? "99+" : item.badge}
             </span>
           )}
           {item.tag && (
-            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-info/15 text-info border border-info/30 uppercase tracking-wide shrink-0">
+            <span className={cn("text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-info/15 text-info border border-info/30 uppercase tracking-wide shrink-0 md:hidden", !isCollapsed && "md:inline-block")}>
               {item.tag}
             </span>
           )}
@@ -183,7 +193,10 @@ export function Sidebar({
   }
 
   const sidebarContent = (
-    <aside className="w-64 h-full bg-surface border-r border-border flex flex-col flex-shrink-0">
+    <aside className={cn(
+      "h-full bg-surface border-r border-border flex flex-col flex-shrink-0 transition-all duration-300 relative",
+      isCollapsed ? "md:w-[72px] w-64" : "w-64"
+    )}>
       {/* Close button — mobile only */}
       <motion.button
         className="md:hidden absolute top-4 right-4 text-ink-3 hover:text-ink"
@@ -200,13 +213,13 @@ export function Sidebar({
       <div className="px-5 py-5 border-b border-border">
         <div className="flex items-center gap-2.5 mb-2">
           <BrandMark size={32} />
-          <span className="font-bold text-lg text-ink tracking-tight">
+          <span className={cn("font-bold text-lg text-ink tracking-tight md:hidden", !isCollapsed && "md:block")}>
             retorn<span className="text-brand">.ai</span>
           </span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="text-base shrink-0 leading-none">{config.icon}</span>
-          <span className="text-ink-3 text-xs truncate">{config.displayName}</span>
+          <span className={cn("text-base shrink-0 leading-none md:hidden", !isCollapsed && "md:block")}>{config.icon}</span>
+          <span className={cn("text-ink-3 text-xs truncate md:hidden", !isCollapsed && "md:block")}>{config.displayName}</span>
         </div>
       </div>
 
@@ -226,32 +239,55 @@ export function Sidebar({
               <Link
                 href="/dashboard/retornai"
                 onClick={onClose}
+                title={isCollapsed ? "RetornAI" : undefined}
                 className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-semibold w-full text-white"
                 style={{ background: "var(--brand-grad)" }}
               >
                 <span className="w-5 h-5 flex items-center justify-center text-base font-bold shrink-0">✦</span>
-                <span className="flex-1 truncate">RetornAI</span>
+                <span className={cn("flex-1 truncate md:hidden", !isCollapsed && "md:inline")}>RetornAI</span>
               </Link>
             </motion.div>
           </div>
         </div>
 
-        <p className="text-ink-4 text-[10.5px] font-semibold uppercase tracking-widest px-2 pt-1 pb-1.5">Dia a dia</p>
+        <p className={cn("text-ink-4 text-[10.5px] font-semibold uppercase tracking-widest px-2 pt-1 pb-1.5 md:hidden", !isCollapsed && "md:block")}>Dia a dia</p>
         {diaADiaItems.map(renderNavItem)}
 
-        <p className="text-ink-4 text-[10.5px] font-semibold uppercase tracking-widest px-2 pt-5 pb-1.5">Crescimento</p>
+        <p className={cn("text-ink-4 text-[10.5px] font-semibold uppercase tracking-widest px-2 pt-5 pb-1.5 md:hidden", !isCollapsed && "md:block")}>Crescimento</p>
         {crescimentoItems.map(renderNavItem)}
 
-        <p className="text-ink-4 text-[10.5px] font-semibold uppercase tracking-widest px-2 pt-5 pb-1.5">Funções do RetornAI</p>
+        <p className={cn("text-ink-4 text-[10.5px] font-semibold uppercase tracking-widest px-2 pt-5 pb-1.5 md:hidden", !isCollapsed && "md:block")}>Funções do RetornAI</p>
         {funcoesItems.map(renderNavItem)}
       </nav>
+
+      {/* Collapse Toggle Button in Sidebar Footer */}
+      <div className="p-3 border-t border-border mt-auto hidden md:block">
+        <button
+          onClick={onToggleCollapse}
+          className="w-full flex items-center justify-center p-2 rounded-lg text-ink-3 hover:text-ink hover:bg-surface-2 transition-colors duration-200"
+          title={isCollapsed ? "Expandir menu" : "Recolher menu"}
+          type="button"
+        >
+          {isCollapsed ? (
+            <ChevronRight className="w-5 h-5" />
+          ) : (
+            <div className="flex items-center gap-2 text-xs font-semibold">
+              <ChevronLeft className="w-4 h-4" />
+              <span>Recolher menu</span>
+            </div>
+          )}
+        </button>
+      </div>
     </aside>
   );
 
   return (
     <>
       {/* ── Desktop sidebar — always visible ─────────────────────────────── */}
-      <div className="hidden md:flex h-full">
+      <div className={cn(
+        "hidden md:flex h-full transition-all duration-300",
+        isCollapsed ? "w-[72px]" : "w-64"
+      )}>
         {sidebarContent}
       </div>
 

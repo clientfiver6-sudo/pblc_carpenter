@@ -2,7 +2,9 @@ import { EVOLUTION_API_URL, EVOLUTION_API_KEY } from "@/lib/env"
 
 function normalizePhone(raw: string): string {
   const digits = raw.replace(/\D/g, "")
-  if (digits.startsWith("55") && digits.length >= 12) return digits
+  // If it already looks like a full international number (11+ digits), leave it as is.
+  // Otherwise, default to Brazil (prepend 55).
+  if (digits.length >= 11) return digits
   return `55${digits}`
 }
 
