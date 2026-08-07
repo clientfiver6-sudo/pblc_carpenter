@@ -50,9 +50,9 @@ export async function createMercadoPagoPlans(): Promise<{
 
   try {
     const [starterId, proId, medicalId] = await Promise.all([
-      createPlan("RetornAI Starter", 149.90),
-      createPlan("RetornAI Pro", 199.90),
-      createPlan("RetornAI Medical", 249.90),
+      createPlan("RetornAI Starter", 20.00),
+      createPlan("RetornAI Pro", 50.00),
+      createPlan("RetornAI Medical", 100.00),
     ])
     await Promise.all([
       setPlatformConfig("mercadopago_starter_plan_id", starterId),

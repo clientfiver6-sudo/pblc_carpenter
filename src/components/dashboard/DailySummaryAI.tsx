@@ -46,7 +46,26 @@ export async function DailySummaryAI({ businessName, todayCount, pendingPayCount
       </p>
     )
   } catch {
-    return null
+    const fmtBRL = (cents: number) =>
+      new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(cents / 100)
+
+    let fallbackText = `Hoje você tem ${todayCount} agendamento${todayCount !== 1 ? "s" : ""} marcado${todayCount !== 1 ? "s" : ""}. `
+    if (pendingPayCount > 0) {
+      fallbackText += `Há ${pendingPayCount} pagamento${pendingPayCount !== 1 ? "s" : ""} pendente${pendingPayCount !== 1 ? "s" : ""} somando ${fmtBRL(pendingPayTotal)}. `
+    } else {
+      fallbackText += `Não há pendências de pagamento. `
+    }
+    if (unreadCount > 0) {
+      fallbackText += `Você tem ${unreadCount} conversa${unreadCount !== 1 ? "s" : ""} não lida${unreadCount !== 1 ? "s" : ""} aguardando retorno.`
+    } else {
+      fallbackText += `Todas as suas conversas estão em dia.`
+    }
+
+    return (
+      <p className="text-sm text-ink-2 leading-relaxed opacity-95">
+        {fallbackText}
+      </p>
+    )
   }
 }
 

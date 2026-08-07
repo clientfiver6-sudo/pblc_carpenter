@@ -1,8 +1,25 @@
-# RetornAI
+# ⚡️ RetornAI
 
-AI-native business management platform ("OS") for Brazilian small service businesses — barbershops, HVAC technicians, clinics, and other service providers. Customers manage bookings, clients, payments, WhatsApp conversations and automations from one dashboard, with an AI assistant (Claude) wired into every workflow.
+<div align="left">
+  <img src="https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js" alt="Next.js 15" />
+  <img src="https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react" alt="React 19" />
+  <img src="https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript" alt="TypeScript 5" />
+  <img src="https://img.shields.io/badge/Supabase-Database-green?style=for-the-badge&logo=supabase" alt="Supabase" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3-blue?style=for-the-badge&logo=tailwindcss" alt="Tailwind CSS 3" />
+  <img src="https://img.shields.io/badge/Claude_3.5-AI-orange?style=for-the-badge&logo=anthropic" alt="Claude AI" />
+  <img src="https://img.shields.io/badge/Mercado_Pago-Payments-blue?style=for-the-badge" alt="Mercado Pago" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="MIT License" />
+</div>
 
-**Language:** the entire UI and all customer-facing copy are in Brazilian Portuguese (pt-BR). Code, comments and docs are in English.
+<br />
+
+An AI-native business management platform ("OS") designed for Brazilian small service businesses — such as barbershops, HVAC technicians, clinics, and local service providers. 
+
+RetornAI helps business owners manage bookings, clients, payments, WhatsApp conversations, and automated rules from a single cohesive dashboard, with a state-of-the-art AI assistant (Anthropic Claude) deeply integrated into every workflow.
+
+> [!NOTE]
+> **Language Policy:** The entire user interface (UI) and all customer-facing copy are in Brazilian Portuguese (pt-BR). Code components, internal comments, and development documentation are written in English.
+
 
 ## Tech stack
 

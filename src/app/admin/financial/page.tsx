@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic"
 import { CheckCircle2, XCircle, DollarSign, TrendingUp, Users, Repeat } from "lucide-react"
 import { CopyButton, CreatePlansButton, TokenInputForm } from "./SetupActions"
 
-const PLAN_PRICES = { pro: 199.90, starter: 149.90, medical: 249.90 } as const
+const PLAN_PRICES = { pro: 50.00, starter: 20.00, medical: 100.00 } as const
 
 function fmtBRL(amount: number) {
   return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(amount)

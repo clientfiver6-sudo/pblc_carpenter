@@ -11,8 +11,8 @@ export function PricingSection() {
     {
       name: "Starter",
       description: "Para quem está começando a digitalizar",
-      priceMonthly: 149.90,
-      priceYearly: 119.90,
+      priceMonthly: 20.00,
+      priceYearly: 16.00,
       features: [
         "Clientes e CRM",
         "Agenda e chamados",
@@ -22,14 +22,14 @@ export function PricingSection() {
       ],
       ctaText: "Começar com Starter",
       popular: false,
-      color: "border-border bg-white hover:border-border-2",
+      color: "border-border bg-white hover:border-brand/30 hover:scale-[1.02] hover:shadow-xl relative duration-300 ease-out",
       badge: null,
     },
     {
       name: "Pro",
       description: "Para negócios em franco crescimento",
-      priceMonthly: 199.90,
-      priceYearly: 159.90,
+      priceMonthly: 50.00,
+      priceYearly: 40.00,
       features: [
         "Tudo do Starter",
         "Instruções de Time",
@@ -40,14 +40,14 @@ export function PricingSection() {
       ],
       ctaText: "Começar com Pro",
       popular: true,
-      color: "border-brand bg-white border-2 scale-[1.02] shadow-xl hover:shadow-2xl relative",
+      color: "border-brand bg-white border-2 scale-[1.02] hover:scale-[1.05] shadow-xl hover:shadow-2xl relative duration-300 ease-out",
       badge: "Mais Popular",
     },
     {
       name: "Medical",
       description: "Para clínicas, consultórios e médicos",
-      priceMonthly: 249.90,
-      priceYearly: 199.90,
+      priceMonthly: 100.00,
+      priceYearly: 80.00,
       features: [
         "Tudo do Pro",
         "Prontuário eletrônico",
@@ -57,7 +57,7 @@ export function PricingSection() {
       ],
       ctaText: "Começar com Medical",
       popular: false,
-      color: "border-border bg-white hover:border-border-2",
+      color: "border-border bg-white hover:border-[#0F766E]/30 hover:scale-[1.02] hover:shadow-xl relative duration-300 ease-out",
       badge: "Saúde",
     },
   ];

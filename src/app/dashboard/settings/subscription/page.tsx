@@ -227,7 +227,7 @@ export default function SubscriptionPage() {
                 )}
                 <div className="mb-4">
                   <p className="text-lg font-bold text-ink">Starter</p>
-                  <p className="text-2xl font-bold text-ink mt-1">R$149,90<span className="text-sm font-normal text-ink-3">/mês</span></p>
+                  <p className="text-2xl font-bold text-ink mt-1">R$20,00<span className="text-sm font-normal text-ink-3">/mês</span></p>
                 </div>
                 <ul className="space-y-2 mb-5">
                   {STARTER_FEATURES.map(f => (
@@ -258,7 +258,7 @@ export default function SubscriptionPage() {
                 </div>
                 <div className="mb-4">
                   <p className="text-lg font-bold text-ink">Pro</p>
-                  <p className="text-2xl font-bold text-ink mt-1">R$199,90<span className="text-sm font-normal text-ink-3">/mês</span></p>
+                  <p className="text-2xl font-bold text-ink mt-1">R$50,00<span className="text-sm font-normal text-ink-3">/mês</span></p>
                 </div>
                 <ul className="space-y-2 mb-5">
                   {PRO_FEATURES.map(f => (
@@ -290,7 +290,7 @@ export default function SubscriptionPage() {
                 )}
                 <div className="mb-4">
                   <p className="text-lg font-bold text-ink">Medical</p>
-                  <p className="text-2xl font-bold text-ink mt-1">R$249,90<span className="text-sm font-normal text-ink-3">/mês</span></p>
+                  <p className="text-2xl font-bold text-ink mt-1">R$100,00<span className="text-sm font-normal text-ink-3">/mês</span></p>
                 </div>
                 <ul className="space-y-2 mb-5">
                   {MEDICAL_FEATURES.map(f => (

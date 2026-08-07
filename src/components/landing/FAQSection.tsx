@@ -46,7 +46,7 @@ export function FAQSection() {
         return (
           <div
             key={idx}
-            className="border border-border/70 rounded-2xl bg-white overflow-hidden transition-all duration-200"
+            className="border border-border/70 rounded-2xl bg-white overflow-hidden transition-all duration-300 hover:border-brand/35 hover:shadow-[0_6px_20px_rgba(60,40,20,0.04)]"
           >
             <button
               onClick={() => toggle(idx)}
