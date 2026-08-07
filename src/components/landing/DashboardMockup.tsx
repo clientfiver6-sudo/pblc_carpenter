@@ -6,7 +6,7 @@ export function DashboardMockup() {
   return (
     <div className="w-full max-w-5xl mx-auto rounded-2xl border border-border/80 bg-white shadow-3 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Browser window header bar */}
-      <div className="bg-[#FBF8F3] border-b border-border/80 px-4 py-3.5 flex items-center justify-between">
+      <div className="bg-[#F8F7F4] border-b border-border/80 px-4 py-3.5 flex items-center justify-between">
         <div className="flex items-center gap-1.5 shrink-0">
           <span className="w-3 h-3 rounded-full bg-red-400/90" />
           <span className="w-3 h-3 rounded-full bg-yellow-400/90" />
@@ -19,7 +19,7 @@ export function DashboardMockup() {
       </div>
 
       {/* Main mockup layout */}
-      <div className="grid grid-cols-12 bg-[#FBF8F3] h-[480px] overflow-hidden text-left font-sans">
+      <div className="grid grid-cols-12 bg-[#F8F7F4] h-[480px] overflow-hidden text-left font-sans">
         
         {/* Left Sidebar */}
         <aside className="col-span-2 bg-white border-r border-border/70 p-3 hidden md:flex flex-col justify-between">

@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 :root {
-  /* Neutrals */
-  --bg: #FBF8F3;
+  /* Neutrals — clean white base */
+  --bg: #FAFAF8;
   --surface: #FFFFFF;
-  --surface-2: #F5F0E8;
+  --surface-2: #F5F3EF;
   --tint: #FFF1E8;
   --tint-2: #FEEBE0;
-  --border: #ECE5D8;
-  --border-2: #DCD3C0;
-  --ink: #181613;
-  --ink-2: #4F4A42;
-  --ink-3: #8C857A;
+  --border: #E8E4DD;
+  --border-2: #D9D4CA;
+  --ink: #1A1815;
+  --ink-2: #4A453D;
+  --ink-3: #8A847A;
   --ink-4: #B5AE9F;
 
   /* Brand — terracotta */
@@ -187,10 +187,10 @@ body {
 }
 
 .glass-subtle {
-  background: rgba(251, 248, 243, 0.85);
+  background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(16px) saturate(160%);
   -webkit-backdrop-filter: blur(16px) saturate(160%);
-  border-bottom: 1px solid rgba(236, 229, 216, 0.7);
+  border-bottom: 1px solid rgba(232, 228, 221, 0.6);
 }
 
 /* ── Gradient text ─────────────────────────────────────────────────────────── */

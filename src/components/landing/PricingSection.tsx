@@ -73,24 +73,24 @@ export function PricingSection() {
     <div className="space-y-12">
       {/* Toggle */}
       <div className="flex items-center justify-center gap-3">
-        <span className={`text-sm font-semibold transition-colors ${billingPeriod === "monthly" ? "text-ink" : "text-ink-3"}`}>
+        <span className={`text-sm font-semibold transition-colors ${billingPeriod === "monthly" ? "text-white" : "text-white/50"}`}>
           Mensal
         </span>
         <button
           onClick={() => setBillingPeriod(billingPeriod === "monthly" ? "yearly" : "monthly")}
-          className="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-surface-2 focus:outline-none focus:ring-2 focus:ring-brand/40"
+          className="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-white/10 focus:outline-none focus:ring-2 focus:ring-brand/40"
           role="switch"
           aria-checked={billingPeriod === "yearly"}
         >
           <span
             className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-brand shadow ring-0 transition duration-200 ease-in-out ${
-              billingPeriod === "yearly" ? "translate-x-5 bg-brand" : "translate-x-0 bg-ink-4"
+              billingPeriod === "yearly" ? "translate-x-5 bg-brand" : "translate-x-0 bg-white/65"
             }`}
           />
         </button>
-        <span className={`text-sm font-semibold transition-colors flex items-center gap-1.5 ${billingPeriod === "yearly" ? "text-ink" : "text-ink-3"}`}>
+        <span className={`text-sm font-semibold transition-colors flex items-center gap-1.5 ${billingPeriod === "yearly" ? "text-white" : "text-white/50"}`}>
           Anual
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-moss/10 text-moss border border-moss/20">
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand/10 text-brand border border-brand/20">
             Economize 20%
           </span>
         </span>
